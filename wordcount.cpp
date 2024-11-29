@@ -3,15 +3,12 @@
 #include <fstream>
 #include <iostream>
 
-WordCount::WordCount(COUNT_OPTION co, std::string arg) : co(co) {
-	/*/DEBUG
-	std::cout << "ARG: |" << arg << "|" << std::endl;
-	//DEBUG */
-	if (arg[0]=='"') {
-		/*/DEBUG
-		std::cout << "ARG TRIMMED: |" << arg.substr(1, arg.size()-2) << "|" << std::endl;
-		//DEBUG */
+WordCount::WordCount(COUNT_OPTION co) : co(co) {
+	input = nullptr;
+}
 
+WordCount::WordCount(COUNT_OPTION co, std::string arg) : co(co) {
+	if (arg[0]=='"') {
 		input = new std::stringstream(arg.substr(1, arg.size()-2));
 	} else {
 		input = new std::ifstream(arg);
@@ -57,7 +54,23 @@ size_t WordCount::count_words() {
 	return num_word;
 }
 
+//TODO input i output promeni na in i out?
 void WordCount::exec() {
+	if (input==nullptr) { //zeli da citam sa cin-a dok se unese EOF
+		std::string line;
+		std::string lines;
+		while (true) {
+			std::getline(std::cin, line);
+			if (line=="EOF") {
+				break;
+			}
+
+			lines += line + '\n';
+		}
+
+		input = new std::stringstream(lines);
+	}
+
 	std::ifstream *file_stream = dynamic_cast<std::ifstream*>(input);
 	if (file_stream!=nullptr) {
 		if (!file_stream->is_open()) {

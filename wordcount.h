@@ -9,6 +9,7 @@ enum COUNT_OPTION {
 class WordCount : public Executable {
 	public:
 		COUNT_OPTION co;
+		WordCount(COUNT_OPTION co);
 		WordCount(COUNT_OPTION co, std::string arg);
 		size_t count_chars();
 		size_t count_words();
@@ -17,4 +18,3 @@ class WordCount : public Executable {
 			delete input;
 		}
 };
-
