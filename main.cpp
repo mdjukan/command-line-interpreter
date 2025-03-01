@@ -1,8 +1,8 @@
-#include <iostream>
-#include <iostream>
-#include "commandlineinterpreter.h"
+#include "CLI.h"
 
 int main() {
-	CommandLineInterpreter cli;
-	cli.start();
+    CLI cli;
+    cli.run();
+
+    return 0;
 }
