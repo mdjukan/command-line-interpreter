@@ -19,7 +19,9 @@ Truncate::Truncate(const std::string& instruction, std::vector<Token> tokens)
     handle_redirects(instruction, tokens);
 }
 
-std::string Truncate::usage() { return "truncate argument"; }
+std::string Truncate::usage() {
+    return "truncate argument";
+}
 
 void Truncate::execute() {
     if (std::filesystem::exists(m_file_name)) {

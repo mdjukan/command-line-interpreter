@@ -1,12 +1,15 @@
 #include "ExecutableFactory.h"
 #include "Token.h"
 #include "exceptions/InstructionError.h"
+#include "exceptions/RuntimeError.h"
 #include "executables/Executables.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
-bool ExecutableFactory::is_space(char c) { return (c == ' ') || (c == '\t'); }
+bool ExecutableFactory::is_space(char c) {
+    return (c == ' ') || (c == '\t');
+}
 
 bool ExecutableFactory::valid_in_word(char c) {
     if (c == '.' || c == '_') {
@@ -67,6 +70,7 @@ std::vector<Token> ExecutableFactory::tokenize(const std::string& instruction) {
             tokens.emplace_back(TokenType::LT, i, i);
             i += 1;
         } else if (instruction[i] == '>') {
+
             if (i + 1 < instruction.size() && instruction[i + 1] == '>') {
                 tokens.emplace_back(TokenType::GGT, i, i + 1);
                 i += 2;
@@ -74,6 +78,7 @@ std::vector<Token> ExecutableFactory::tokenize(const std::string& instruction) {
                 tokens.emplace_back(TokenType::GT, i, i);
                 i += 1;
             }
+
         } else if (instruction[i] == '|') {
             tokens.emplace_back(TokenType::PIPE, i, i);
             i += 1;
@@ -94,6 +99,7 @@ std::vector<Token> ExecutableFactory::tokenize(const std::string& instruction) {
             std::size_t start_idx = i;
 
             i += 1;
+            //... "adjkfjasdfhkajdsfh
             while (i < instruction.size() && instruction[i] != '"') {
                 i += 1;
             }
@@ -125,7 +131,38 @@ std::vector<Token> ExecutableFactory::tokenize(const std::string& instruction) {
     return tokens;
 }
 
-void print_tokens(const std::string& instruction, const std::vector<Token>& tokens) {
+// debug
+std::ostream& operator<<(std::ostream& out, const enum TokenType& type) {
+    switch (type) {
+    case TokenType::WORD:
+        out << "WORD";
+        break;
+    case TokenType::STRLIT:
+        out << "STRLIT";
+        break;
+    case TokenType::OPTION:
+        out << "OPTION";
+        break;
+    case TokenType::PIPE:
+        out << "PIPE";
+        break;
+    case TokenType::LT:
+        out << "LT";
+        break;
+    case TokenType::GT:
+        out << "GT";
+        break;
+    case TokenType::GGT:
+        out << "GGT";
+        break;
+    }
+
+    return out;
+}
+
+// debug
+void ExecutableFactory::print_tokens(const std::string& instruction,
+                                     const std::vector<Token>& tokens) {
     for (const Token& token : tokens) {
         std::cout << "[" << token.type << ":" << token.get_value(instruction) << "]";
     }
@@ -134,10 +171,11 @@ void print_tokens(const std::string& instruction, const std::vector<Token>& toke
 
 Executable* ExecutableFactory::create_executable(const std::string& instruction) {
     std::vector<Token> tokens = tokenize(instruction);
-    /* print_tokens(tokens); */
+    /* print_tokens(instruction, tokens); */
 
-    if (tokens.empty()) { // instrukcija koja sadrzi samo ' ' i '\t'
-        return nullptr;
+    // instrukcija u kojoj je samo white space
+    if (tokens.empty()) {
+        throw new RuntimeError("Error - empty instruction");
     }
 
     if (contains_pipe(tokens)) {
@@ -155,6 +193,7 @@ Executable* ExecutableFactory::from_tokens(const std::string& instruction,
     }
 
     std::string command = tokens[0].get_value(instruction);
+    // tokens.erase(tokens.begin())
     if (command == "echo") {
         return new Echo(instruction, tokens);
     } else if (command == "prompt") {

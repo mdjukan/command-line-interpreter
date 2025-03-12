@@ -8,12 +8,11 @@ void InstructionExecutor::execute() {
     try {
         exe = ExecutableFactory::create_executable(m_instruction);
 
-        if (exe != nullptr) {
-            if (!exe->writes_to_file()) {
-                exe->set_out(m_out);
-            }
-            exe->execute();
+        if (!exe->writes_to_file()) {
+            exe->set_out(m_out, false);
         }
+
+        exe->execute();
     } catch (Exception* e) {
         (*m_out) << e->what() << std::endl;
         delete e;

@@ -30,7 +30,9 @@ Head::Head(const std::string& instruction, std::vector<Token> tokens)
     handle_redirects(instruction, tokens);
 }
 
-std::string Head::usage() { return "head -ncount [argument]"; }
+std::string Head::usage() {
+    return "head -ncount [argument]";
+}
 
 void Head::execute() {
     std::string line;

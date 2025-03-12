@@ -9,7 +9,8 @@ class InstructionExecutor {
 
     public:
     InstructionExecutor(const std::string& instruction, std::ostream* out)
-        : m_instruction(instruction), m_out(out) {}
+        : m_instruction(instruction), m_out(out) {
+    }
 
     void execute();
 };

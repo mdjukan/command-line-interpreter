@@ -16,7 +16,9 @@ Batch::Batch(const std::string& instruction, std::vector<Token> tokens)
     handle_redirects(instruction, tokens);
 }
 
-std::string Batch::usage() { return "batch [argument]"; }
+std::string Batch::usage() {
+    return "batch [argument]";
+}
 
 void Batch::execute() {
     std::string instruction;
@@ -24,4 +26,5 @@ void Batch::execute() {
         InstructionExecutor ie(instruction, m_out);
         ie.execute();
     }
+    m_in->clear();
 }

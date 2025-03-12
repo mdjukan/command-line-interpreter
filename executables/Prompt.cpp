@@ -18,6 +18,10 @@ Prompt::Prompt(const std::string& instruction, std::vector<Token> tokens)
     handle_redirects(instruction, tokens);
 }
 
-std::string Prompt::usage() { return "prompt argument"; }
+std::string Prompt::usage() {
+    return "prompt argument";
+}
 
-void Prompt::execute() { CLI::prompt = m_prompt; }
+void Prompt::execute() {
+    CLI::prompt = m_prompt;
+}

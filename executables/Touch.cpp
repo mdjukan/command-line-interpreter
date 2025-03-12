@@ -19,7 +19,9 @@ Touch::Touch(const std::string& instruction, std::vector<Token> tokens)
     handle_redirects(instruction, tokens);
 }
 
-std::string Touch::usage() { return "touch argument"; }
+std::string Touch::usage() {
+    return "touch argument";
+}
 
 void Touch::execute() {
     if (std::filesystem::exists(m_file_name)) {

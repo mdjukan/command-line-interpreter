@@ -27,14 +27,16 @@ WordCount::WordCount(const std::string& instruction, std::vector<Token> tokens)
         redirect_in(tokens.front().get_value(instruction));
         tokens.erase(tokens.begin());
     } else if (!tokens.empty() && tokens.front().type == TokenType::STRLIT) {
-        set_in(Utils::strlit_to_sstream(instruction, tokens.front()));
+        set_in(Utils::strlit_to_sstream(instruction, tokens.front()), true);
         tokens.erase(tokens.begin());
     }
 
     handle_redirects(instruction, tokens);
 }
 
-std::string WordCount::usage() { return "wc (-w|-c) [argument]"; }
+std::string WordCount::usage() {
+    return "wc (-w|-c) [argument]";
+}
 
 void WordCount::execute() {
     switch (m_option) {
@@ -49,7 +51,7 @@ void WordCount::execute() {
 
 std::size_t WordCount::word_count() {
     std::size_t total = 0;
-    bool in_word      = false;
+    bool in_word = false;
     char c;
 
     while (true) {

@@ -3,7 +3,8 @@
 
 class RuntimeError : public Exception {
     public:
-    RuntimeError(const std::string& message) : Exception(message) {}
+    RuntimeError(const std::string& message) : Exception(message) {
+    }
 
     std::string what() override;
 };

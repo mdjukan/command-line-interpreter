@@ -18,7 +18,9 @@ Remove::Remove(const std::string& instruction, std::vector<Token> tokens)
     handle_redirects(instruction, tokens);
 }
 
-std::string Remove::usage() { return "rm argument"; }
+std::string Remove::usage() {
+    return "rm argument";
+}
 
 void Remove::execute() {
     if (std::filesystem::exists(m_file_name)) {

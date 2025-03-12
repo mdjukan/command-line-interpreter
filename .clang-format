@@ -1,0 +1,20 @@
+TabWidth: 4
+IndentWidth: 4
+UseTab: Never
+Language: Cpp
+
+PointerAlignment: Left
+
+AccessModifierOffset: 0
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+
+AlignEscapedNewlinesLeft: true
+AlignOperands: true
+
+AlignTrailingComments: true
+
+ColumnLimit: 100
+
+AllowShortFunctionsOnASingleLine: None
+

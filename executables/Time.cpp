@@ -7,18 +7,25 @@
 
 Time::Time(const std::string& instruction, std::vector<Token> tokens)
     : Executable(instruction, tokens) {
-    tokens.erase(tokens.begin());
+    // -1- proverim da li je time
+    // -2- sklonim time token pre poziva
+    //
+    tokens.erase(tokens.begin()); // prvi token je time, jer jedino tad pozivam ovaj konstruktor
     handle_redirects(instruction, tokens);
 }
 
 std::string Time::current_time() {
-    auto t  = std::time(nullptr);
+    auto t = std::time(nullptr);
     auto tm = *std::localtime(&t);
     std::stringstream ss;
     ss << std::put_time(&tm, "%H:%M:%S");
     return ss.str();
 }
 
-std::string Time::usage() { return "time"; }
+std::string Time::usage() {
+    return "time";
+}
 
-void Time::execute() { (*m_out) << current_time() << std::endl; }
+void Time::execute() {
+    (*m_out) << current_time() << std::endl;
+}

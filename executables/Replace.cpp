@@ -33,7 +33,9 @@ Replace::Replace(const std::string& instruction, std::vector<Token> tokens)
     handle_redirects(instruction, tokens);
 }
 
-std::string Replace::usage() { return "tr [argument] what [with]"; }
+std::string Replace::usage() {
+    return "tr [argument] what [with]";
+}
 
 void Replace::execute() {
     std::string line;

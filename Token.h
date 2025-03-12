@@ -13,13 +13,16 @@ enum TokenType {
 
 struct Token {
     enum TokenType type;
+    // std::string value;
     std::size_t start_idx;
     std::size_t end_idx;
 
     Token(enum TokenType type, std::size_t start_idx, std::size_t end_idx)
-        : type(type), start_idx(start_idx), end_idx(end_idx) {}
+        : type(type), start_idx(start_idx), end_idx(end_idx) {
+    }
 
     std::string get_value(const std::string& instruction) const {
+        // substr(start, length) -> [start, start + length)
         return instruction.substr(start_idx, end_idx - start_idx + 1);
     }
 };
